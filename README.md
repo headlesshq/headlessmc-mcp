@@ -7,6 +7,15 @@
 </picture></p>
 <p align="center"><a href="https://github.com/headlesshq/headlessmc">HMC</a> | <a href="https://github.com/headlesshq/hmc-specifics">HMC-Specifics</a> | <a href="https://github.com/headlesshq/headlessmc-skill">HMC-Skill</a></p>
 
+<div align="center">
+
+[![CodeFactor](https://www.codefactor.io/repository/github/headlesshq/headlessmc-mcp/badge)](https://www.codefactor.io/repository/github/headlesshq/headlessmc-mcp)
+[![GitHub All Releases](https://img.shields.io/github/downloads/headlesshq/headlessmc-mcp/total.svg)](https://github.com/headlesshq/headlessmc-mcp/releases)
+![MIT License](https://img.shields.io/github/license/headlesshq/headlessmc-mcp)
+![Github last-commit](https://img.shields.io/github/last-commit/headlesshq/headlessmc-mcp)
+
+</div>
+
 > [!WARNING]
 > This is a prototype. We are looking forward to feedback and feature requests.
 
