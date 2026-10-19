@@ -213,6 +213,13 @@ jobs:
           node scripts/npm-packages.mjs dist npm-out
           # the platform packages first, the main package depends on them
           for package in npm-out/headlessmc-mcp-*/ npm-out/headlessmc-mcp/; do
+            name=$(node -p "require('./${package}package.json').name")
+            version=$(node -p "require('./${package}package.json').version")
+            # skip versions published by an earlier attempt, so that a failed run can be re-run
+            if npm view "$name@$version" version >/dev/null 2>&1; then
+              echo "$name@$version is already published, skipping"
+              continue
+            fi
             npm publish --access public --provenance "$package"
           done
 

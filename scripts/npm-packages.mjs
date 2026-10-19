@@ -53,7 +53,10 @@ for (const [platform, asset] of Object.entries(platforms)) {
         files: ['bin'],
     }, null, 2) + '\n');
     writeFileSync(join(dir, 'README.md'), `# ${name}\n\nThe ${platform} executable of [${main.name}](https://www.npmjs.com/package/${main.name}), use that package instead.\n`);
+    copyFileSync('LICENSE', join(dir, 'LICENSE'));
 }
 
 cpSync('npm/headlessmc-mcp', join(out, 'headlessmc-mcp'), { recursive: true });
+// npm always packs a LICENSE file, regardless of "files"
+copyFileSync('LICENSE', join(out, 'headlessmc-mcp', 'LICENSE'));
 console.log(`Created the npm packages of version ${main.version} in ${out}`);
