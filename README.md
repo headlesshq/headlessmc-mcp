@@ -121,13 +121,9 @@ Download the latest release from [GitHub Releases](https://github.com/headlesshq
 | `headlessmc-mcp-linux-x64`, `headlessmc-mcp-linux-arm64` | Linux (e.g. Ubuntu) x64 and arm64 |
 | `headlessmc-mcp-macos-arm64`, `headlessmc-mcp-macos-x64` | macOS on Apple silicon and Intel |
 
-The native executables are built with GraalVM and need no Java installation for the MCP server itself
-(Minecraft still needs Java, HeadlessMc can download it). On macOS, remove the quarantine flag of a downloaded executable
-with `xattr -d com.apple.quarantine headlessmc-mcp-macos-*`.
-
 ## Building
 
-Requires JDK 25. HMC-Specifics' API is not on Maven Central, it is built from the git submodule.
+Requires JDK 25:
 
 ```sh
 git clone --recurse-submodules https://github.com/headlesshq/headlessmc-mcp.git
@@ -140,19 +136,6 @@ cd headlessmc-mcp
 ./scripts/build-native.sh
 # -> build/headlessmc-mcp-<version>-runner
 ```
-
-Releases are made with [release-please](https://github.com/googleapis/release-please) from
-[Conventional Commits](https://www.conventionalcommits.org): merging its release PR creates the tag and the GitHub release,
-and [the lifecycle workflow](.github/workflows/lifecycle.yml) attaches the jar and the five native executables to it.
-It then publishes the npm packages (`npm/`, one package per platform with the executable, created by `scripts/npm-packages.mjs`)
-and [`server.json`](server.json) to the [MCP Registry](https://registry.modelcontextprotocol.io). On the release pull request,
-`scripts/sync-version.mjs` writes the new version into the npm package, the plugin manifests and `server.json`, which pin the
-npm package to it.
-On every other push only the Linux x64 executable is built. Dependencies are updated by [Renovate](.github/renovate.json5).
-
-The npm package [`@headlesshq/headlessmc-mcp`](https://www.npmjs.com/package/@headlesshq/headlessmc-mcp) starts the native
-executable for your platform, so with Node.js 18 or newer `npx -y @headlesshq/headlessmc-mcp@0.1.0` runs the MCP server
-without downloading anything by hand. The plugins and the [setup](#setup) instructions use it.
 
 ## Configuration
 
@@ -167,19 +150,6 @@ All HeadlessMc properties (`hmc.*`) work as well, as system properties or in Hea
 
 The `hmc-mcp-bridge` mod reads `hmc.mcp.token`, `hmc.mcp.portFile`, `hmc.mcp.host` (`127.0.0.1`), `hmc.mcp.port` (`0`, any free port),
 `hmc.mcp.registry` and `hmc.mcp.enabled` (`true`) from system properties. Without `hmc.mcp.token` it registers the game for attaching.
-
-## Status and limitations
-
-Tested end to end with headless Fabric 1.21.8 clients: launch, main menu, singleplayer world creation, chat command, metrics, quit,
-two clients of the same version at once (the second one in an automatically created profile), elicitation for prompts, EULA and login,
-attaching a second MCP server to a client that was launched without it.
-Not tested yet: running servers, Forge/NeoForge, legacy versions.
-
-- Screens are identified by class name, which is obfuscated in production Fabric/Forge environments (e.g. `class_442`
-  is the title screen). Button texts are readable, so agents navigate by those.
-- Vanilla clients can not be controlled, HMC-Specifics needs a modloader.
-- Without elicitation support in the MCP client, HeadlessMc prompts fail, pass all arguments to commands.
-- No screenshots in headless mode, the game does not render.
 
 ## Privacy and terms
 
