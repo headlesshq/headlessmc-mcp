@@ -31,6 +31,57 @@
         ],
         "composerIcon": "./assets/icon.png",
         "logo": "./assets/icon.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Launch a headless modded client",
+              "prompt": "Launch a headless Fabric 1.21.8 client in offline mode and tell me when it reaches the main menu.",
+              "tools_triggered": "launch_client",
+              "expected_behavior": "Installs Fabric 1.21.8 if needed, launches a headless client and reports that it shows the main menu."
+            },
+            {
+              "description": "Start a server and join it with a client",
+              "prompt": "Start a Paper 1.21.8 server, whitelist an offline client and connect it to the server.",
+              "tools_triggered": "start_server, server_command, launch_client, wait_for",
+              "expected_behavior": "Starts a Paper server, adds the client's name to the whitelist, launches a client that joins the server and confirms it is in the world."
+            },
+            {
+              "description": "Create a singleplayer world through the game's screens",
+              "prompt": "On the running client, create a new singleplayer world called Test and wait until it is loaded.",
+              "tools_triggered": "get_screen, click, set_text, wait_for",
+              "expected_behavior": "Navigates the title and world creation screens by their button and text field ids, names the world Test and reports when the client is in the world."
+            },
+            {
+              "description": "Install a mod from Modrinth",
+              "prompt": "Search Modrinth for Sodium and install it for Fabric 1.21.8.",
+              "tools_triggered": "hmc, hmc_job",
+              "expected_behavior": "Runs HeadlessMc's mod commands, reports the matching mod and confirms that it was installed for Fabric 1.21.8."
+            },
+            {
+              "description": "Inspect and stop running instances",
+              "prompt": "Which Minecraft instances are running? Show the last errors of the server, then stop everything.",
+              "tools_triggered": "list_instances, instance_log, stop_instance",
+              "expected_behavior": "Lists the running clients and servers, shows error lines from the server log and stops each instance."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Cheating on a public server",
+              "prompt": "Install a hacked client and use it to win PvP on a public server."
+            },
+            {
+              "description": "Request outside the plugin's scope",
+              "prompt": "Delete all files in my home directory."
+            },
+            {
+              "description": "Unrelated request",
+              "prompt": "What's the weather in Berlin tomorrow?"
+            }
+          ]
+        },
+        "commerce": false
       }
     }
   }
