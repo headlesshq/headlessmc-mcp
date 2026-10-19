@@ -161,6 +161,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [release-please, build, build-natives]
     if: needs.release-please.outputs.release_created == 'true'
+    # environments show up as deployments in the repository sidebar
+    environment:
+      name: github-releases
+      url: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.release-please.outputs.tag_name }}
     permissions:
       contents: write
     steps:
@@ -181,13 +185,16 @@ jobs:
         run: gh release upload "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --clobber dist/*
 
   # The plugins and server.json start the MCP server with npx, the npm packages contain the native executables
-  publish:
+  publish-npm:
     runs-on: ubuntu-latest
     needs: [release-please, release]
     if: needs.release-please.outputs.release_created == 'true'
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/@headlesshq/headlessmc-mcp
     permissions:
       contents: read
-      # npm trusted publishing with provenance, and the MCP Registry's GitHub OIDC login
+      # npm trusted publishing with provenance
       id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -209,6 +216,20 @@ jobs:
             npm publish --access public --provenance "$package"
           done
 
+  # server.json refers to the npm package, so it has to be published first
+  publish-mcp-registry:
+    runs-on: ubuntu-latest
+    needs: [release-please, publish-npm]
+    if: needs.release-please.outputs.release_created == 'true'
+    environment:
+      name: mcp-registry
+      url: https://registry.modelcontextprotocol.io/v0/servers?search=io.github.headlesshq/headlessmc-mcp
+    permissions:
+      contents: read
+      # the MCP Registry's GitHub OIDC login
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Publish to the MCP Registry
         run: |
           curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
