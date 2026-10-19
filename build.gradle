@@ -1,0 +1,83 @@
+plugins {
+    id 'java'
+    alias(libs.plugins.quarkus)
+}
+
+group = 'io.github.headlesshq'
+version = "${project_version}"
+
+repositories {
+    mavenCentral()
+}
+
+configurations.configureEach {
+    // The jline progressbar draws to the terminal, but stdout is the MCP channel.
+    exclude group: 'io.github.headlesshq', module: 'headlessmc-progressbar-jline'
+}
+
+configurations {
+    // The mod jar that is bundled and copied into the mods folder of launched clients.
+    hmcMcpBridgeMod {
+        canBeConsumed = false
+        canBeResolved = true
+    }
+}
+
+dependencies {
+    implementation enforcedPlatform(libs.quarkus.bom)
+    implementation 'io.quarkus:quarkus-arc'
+    // makes picocli @Command classes CDI beans, HeadlessMc's commands rely on that
+    implementation 'io.quarkus:quarkus-picocli'
+    implementation libs.quarkus.mcp.server.stdio
+
+    implementation libs.headlessmc
+    implementation libs.headlessmc.bom
+    implementation libs.headlessmc.commands
+    implementation libs.headlessmc.console
+    implementation libs.headlessmc.launcher
+    implementation libs.headlessmc.launcher.process
+    implementation libs.headlessmc.launcher.server
+    implementation libs.headlessmc.launcher.profile
+    implementation libs.headlessmc.commands.mod
+    implementation libs.headlessmc.mods
+    implementation libs.headlessmc.mods.distribution
+    implementation libs.headlessmc.net
+    implementation libs.headlessmc.platform
+    implementation libs.headlessmc.test
+    implementation libs.headlessmc.config
+    implementation libs.headlessmc.java.launcher
+    implementation libs.picocli
+    implementation libs.jspecify
+
+    hmcMcpBridgeMod project(path: ':hmc-mcp-bridge', configuration: 'modJar')
+
+    testImplementation 'io.quarkus:quarkus-junit'
+    testImplementation libs.quarkus.mcp.server.test
+    testImplementation libs.jline
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+// Bundle the mod as a resource, the server copies it into the mods folder of the clients it launches.
+def bundledMod = tasks.register('bundleHmcMcpBridgeMod', Sync) {
+    from(configurations.hmcMcpBridgeMod) {
+        rename { 'hmc-mcp-bridge.jar' }
+    }
+    into layout.buildDirectory.dir('generated/hmc-mcp-bridge-mod/hmc-mcp-bridge')
+}
+
+sourceSets.main.resources.srcDir(bundledMod.map { layout.buildDirectory.dir('generated/hmc-mcp-bridge-mod').get() })
+
+test {
+    useJUnitPlatform()
+    systemProperty 'java.util.logging.manager', 'org.jboss.logmanager.LogManager'
+    systemProperty 'hmc.files.location', layout.buildDirectory.dir('test-hmc').get().asFile.absolutePath
+}

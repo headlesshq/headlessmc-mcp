@@ -1,0 +1,40 @@
+[versions]
+# Keep quarkus aligned with headlessmc/gradle/libs.versions.toml, HeadlessMc's modules are built with it.
+quarkus = "3.40.1"
+quarkus-mcp-server = "2.0.3"
+headlessmc = "3.0.0-RC8"
+hmc-specifics = "3.0.1"
+picocli = "4.7.7"
+jspecify = "1.0.1"
+# keep aligned with headlessmc, which splits command lines with JLine
+jline = "4.4.8"
+
+[libraries]
+quarkus-bom = { module = "io.quarkus.platform:quarkus-bom", version.ref = "quarkus" }
+quarkus-mcp-server-stdio = { module = "io.quarkiverse.mcp:quarkus-mcp-server-stdio", version.ref = "quarkus-mcp-server" }
+quarkus-mcp-server-test = { module = "io.quarkiverse.mcp:quarkus-mcp-server-test", version.ref = "quarkus-mcp-server" }
+
+headlessmc = { module = "io.github.headlesshq:headlessmc", version.ref = "headlessmc" }
+headlessmc-bom = { module = "io.github.headlesshq:headlessmc-bom", version.ref = "headlessmc" }
+headlessmc-commands = { module = "io.github.headlesshq:headlessmc-commands", version.ref = "headlessmc" }
+headlessmc-console = { module = "io.github.headlesshq:headlessmc-console", version.ref = "headlessmc" }
+headlessmc-launcher = { module = "io.github.headlesshq:headlessmc-launcher", version.ref = "headlessmc" }
+headlessmc-launcher-process = { module = "io.github.headlesshq:headlessmc-launcher-process", version.ref = "headlessmc" }
+headlessmc-launcher-server = { module = "io.github.headlesshq:headlessmc-launcher-server", version.ref = "headlessmc" }
+headlessmc-launcher-profile = { module = "io.github.headlesshq:headlessmc-launcher-profile", version.ref = "headlessmc" }
+headlessmc-commands-mod = { module = "io.github.headlesshq:headlessmc-commands-mod", version.ref = "headlessmc" }
+headlessmc-mods = { module = "io.github.headlesshq:headlessmc-mods", version.ref = "headlessmc" }
+headlessmc-mods-distribution = { module = "io.github.headlesshq:headlessmc-mods-distribution", version.ref = "headlessmc" }
+headlessmc-net = { module = "io.github.headlesshq:headlessmc-net", version.ref = "headlessmc" }
+headlessmc-platform = { module = "io.github.headlesshq:headlessmc-platform", version.ref = "headlessmc" }
+headlessmc-test = { module = "io.github.headlesshq:headlessmc-test", version.ref = "headlessmc" }
+headlessmc-config = { module = "io.github.headlesshq:headlessmc-config", version.ref = "headlessmc" }
+headlessmc-java-launcher = { module = "io.github.headlesshq:headlessmc-java-launcher", version.ref = "headlessmc" }
+
+hmc-specifics-api = { module = "me.earth.headlessmc:hmc-specifics-api", version.ref = "hmc-specifics" }
+picocli = { module = "info.picocli:picocli", version.ref = "picocli" }
+jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
+jline = { module = "org.jline:jline", version.ref = "jline" }
+
+[plugins]
+quarkus = { id = "io.quarkus", version.ref = "quarkus" }

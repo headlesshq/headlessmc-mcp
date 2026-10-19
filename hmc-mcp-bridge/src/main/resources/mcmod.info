@@ -1,0 +1,11 @@
+[
+  {
+    "modid": "hmc_mcp_bridge",
+    "name": "HMC-MCP-Bridge",
+    "description": "Lets the HeadlessMc MCP server control the game through HMC-Specifics.",
+    "version": "${version}",
+    "url": "https://github.com/headlesshq/headlessmc-mcp",
+    "logoFile": "assets/hmc_mcp_bridge/icon.png",
+    "dependencies": []
+  }
+]

@@ -1,0 +1,18 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/headlesshq/headlessmc-mcp/issues"
+
+[[mods]]
+modId = "hmc_mcp_bridge"
+version = "${version}"
+displayName = "HMC-MCP-Bridge"
+description = "Lets the HeadlessMc MCP server control the game through HMC-Specifics."
+logoFile = "assets/hmc_mcp_bridge/icon.png"
+
+[[dependencies.hmc_mcp_bridge]]
+modId = "headlessmc"
+type = "required"
+versionRange = "[3.0.0,)"
+ordering = "AFTER"
+side = "CLIENT"

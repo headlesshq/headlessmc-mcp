@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.github.headlesshq'
+version = "${project_version}"
+base.archivesName = 'hmc-mcp-bridge'
+
+repositories {
+    mavenCentral()
+}
+
+// One jar for every modloader and Minecraft version, so everything is compiled for Java 8.
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 8
+    options.compilerArgs.add('-Xlint:-options')
+}
+
+// The stubs replace the classes of the modloaders, they are only compiled against and not packaged.
+sourceSets {
+    stubs
+}
+
+dependencies {
+    compileOnly sourceSets.stubs.output
+    // Provided by the HMC-Specifics mod at runtime, together with picocli and the HeadlessMc console.
+    compileOnly libs.hmc.specifics.api
+    compileOnly libs.picocli
+    compileOnly libs.headlessmc.console
+}
+
+processResources {
+    def props = [version: project.version]
+    inputs.properties props
+    filesMatching(['fabric.mod.json', 'mcmod.info', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', 'hmc_mcp_bridge.version']) {
+        expand props
+    }
+}
+
+tasks.withType(Jar).configureEach {
+    manifest.attributes('Implementation-Title': project.name, 'Implementation-Version': project.version)
+}
+
+// The server bundles the mod jar and copies it into the mods folder of the instances it launches.
+configurations {
+    modJar {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+}
+
+artifacts {
+    modJar jar
+}

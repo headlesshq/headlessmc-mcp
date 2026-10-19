@@ -1,0 +1,4 @@
+# The commands of HMC-MCP-Bridge, see me.earth.headlessmc.mc.commands.CommandRegistry in HMC-Specifics.
+io.github.headlesshq.hmcmcp.command.McpCommand
+mcp io.github.headlesshq.hmcmcp.command.McpScreenCommand
+mcp io.github.headlesshq.hmcmcp.command.McpStateCommand

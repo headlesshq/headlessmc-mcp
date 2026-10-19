@@ -1,0 +1,19 @@
+{
+  "name": "headlessmc-mcp",
+  "displayName": "HeadlessMc MCP",
+  "version": "0.1.0",
+  "description": "MCP server for HeadlessMc: install, launch and control Minecraft: Java Edition clients and servers, also headless, on every version and modloader, with in-game control through HMC-Specifics.",
+  "author": {
+    "name": "headlesshq",
+    "url": "https://github.com/headlesshq"
+  },
+  "homepage": "https://github.com/headlesshq/headlessmc-mcp",
+  "repository": "https://github.com/headlesshq/headlessmc-mcp",
+  "license": "MIT",
+  "keywords": ["minecraft", "headlessmc", "mcp", "launcher", "modding", "testing"],
+  "icon": "./assets/icon.png",
+  "documentationUrl": "https://github.com/headlesshq/headlessmc-mcp#readme",
+  "supportUrl": "https://github.com/headlesshq/headlessmc-mcp/issues",
+  "privacyPolicyUrl": "https://github.com/headlesshq/headlessmc-mcp/blob/main/PRIVACY.md",
+  "termsOfServiceUrl": "https://github.com/headlesshq/headlessmc-mcp/blob/main/TERMS.md"
+}

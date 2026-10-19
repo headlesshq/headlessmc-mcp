@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "hmc_mcp_bridge",
+  "version": "${version}",
+  "name": "HMC-MCP-Bridge",
+  "description": "Lets the HeadlessMc MCP server control the game through HMC-Specifics.",
+  "license": "MIT",
+  "icon": "assets/hmc_mcp_bridge/icon.png",
+  "contact": {
+    "homepage": "https://github.com/headlesshq/headlessmc-mcp",
+    "sources": "https://github.com/headlesshq/headlessmc-mcp"
+  },
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "io.github.headlesshq.hmcmcp.loader.FabricMod"
+    ]
+  },
+  "depends": {
+    "headlessmc": ">=3.0.0",
+    "java": ">=8"
+  }
+}

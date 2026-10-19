@@ -1,0 +1,3 @@
+[submodule "hmc-specifics"]
+	path = hmc-specifics
+	url = https://github.com/headlesshq/hmc-specifics.git

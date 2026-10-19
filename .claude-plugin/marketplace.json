@@ -1,0 +1,17 @@
+{
+  "name": "headlessmc-mcp",
+  "owner": {
+    "name": "headlesshq",
+    "url": "https://github.com/headlesshq"
+  },
+  "metadata": {
+    "description": "The HeadlessMc MCP server: install, launch and control Minecraft: Java Edition from AI agents."
+  },
+  "plugins": [
+    {
+      "name": "headlessmc-mcp",
+      "source": "./plugin",
+      "description": "MCP server for HeadlessMc: install, launch and control Minecraft: Java Edition clients and servers, also headless, on every version and modloader, with in-game control through HMC-Specifics."
+    }
+  ]
+}

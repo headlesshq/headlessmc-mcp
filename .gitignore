@@ -1,0 +1,28 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Visual Studio Code
+.vscode/
+
+# OSX
+.DS_Store
+
+# Java
+hs_err_*.log
+replay_*.log
+*.log
+
+# Minecraft / HeadlessMc
+run/
+HeadlessMC
+HeadlessMc
+
+# Local environment
+.env
+.claude

@@ -1,0 +1,20 @@
+{
+  "name": "headlessmc-mcp",
+  "interface": {
+    "displayName": "HeadlessMc MCP"
+  },
+  "plugins": [
+    {
+      "name": "headlessmc-mcp",
+      "source": {
+        "source": "local",
+        "path": "./plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

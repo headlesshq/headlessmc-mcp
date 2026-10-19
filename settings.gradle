@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'headlessmc-mcp'
+
+// The root project is the MCP server, a Quarkus application that uses HeadlessMc as a library.
+
+// The version independent mod that lets the server control the game through HMC-Specifics.
+include 'hmc-mcp-bridge'
+
+// HMC-Specifics is a git submodule, run 'git submodule update --init' after cloning.
+// Its API is not published to Maven Central, so it is built from source, like in hmc-prometheus.
+includeBuild('hmc-specifics/hmc-specifics-api') {
+    dependencySubstitution {
+        substitute module('me.earth.headlessmc:hmc-specifics-api') using project(':')
+    }
+}

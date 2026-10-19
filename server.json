@@ -1,0 +1,36 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.headlesshq/headlessmc-mcp",
+  "title": "HeadlessMc",
+  "description": "Install, launch and control Minecraft: Java Edition clients and servers, also headless.",
+  "repository": {
+    "url": "https://github.com/headlesshq/headlessmc-mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://github.com/headlesshq/headlessmc-mcp",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/headlesshq/headlessmc-mcp/main/docs/logo.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"],
+      "theme": "light"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/headlesshq/headlessmc-mcp/main/docs/logo-dark.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"],
+      "theme": "dark"
+    }
+  ],
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@headlesshq/headlessmc-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

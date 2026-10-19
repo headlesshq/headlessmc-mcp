@@ -1,0 +1,29 @@
+{
+  "name": "@headlesshq/headlessmc-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for HeadlessMc: install, launch and control Minecraft: Java Edition from AI agents.",
+  "mcpName": "io.github.headlesshq/headlessmc-mcp",
+  "keywords": ["mcp", "mcp-server", "minecraft", "headlessmc", "modding"],
+  "homepage": "https://github.com/headlesshq/headlessmc-mcp",
+  "bugs": "https://github.com/headlesshq/headlessmc-mcp/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/headlesshq/headlessmc-mcp.git",
+    "directory": "npm/headlessmc-mcp"
+  },
+  "license": "MIT",
+  "bin": {
+    "headlessmc-mcp": "bin/headlessmc-mcp.js"
+  },
+  "files": ["bin"],
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "@headlesshq/headlessmc-mcp-linux-x64": "0.1.0",
+    "@headlesshq/headlessmc-mcp-linux-arm64": "0.1.0",
+    "@headlesshq/headlessmc-mcp-darwin-x64": "0.1.0",
+    "@headlesshq/headlessmc-mcp-darwin-arm64": "0.1.0",
+    "@headlesshq/headlessmc-mcp-win32-x64": "0.1.0"
+  }
+}

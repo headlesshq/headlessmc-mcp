@@ -1,0 +1,37 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "headlessmc-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for HeadlessMc: install, launch and control Minecraft: Java Edition clients and servers, also headless, on every version and modloader, with in-game control through HMC-Specifics.",
+  "author": {
+    "name": "headlesshq",
+    "url": "https://github.com/headlesshq"
+  },
+  "homepage": "https://github.com/headlesshq/headlessmc-mcp",
+  "repository": "https://github.com/headlesshq/headlessmc-mcp",
+  "license": "MIT",
+  "keywords": ["minecraft", "headlessmc", "mcp", "launcher", "modding", "testing"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "HeadlessMc MCP",
+        "shortDescription": "Launch and control Minecraft",
+        "longDescription": "Install, launch and control Minecraft: Java Edition from your agent: vanilla, Fabric, Forge and NeoForge clients and servers, several at once and headless (no display or GPU), mods from Modrinth, and in-game control (screens, buttons, chat, commands, state) through HMC-Specifics.",
+        "developerName": "headlesshq",
+        "category": "Developer Tools",
+        "capabilities": ["Read", "Write"],
+        "websiteURL": "https://github.com/headlesshq/headlessmc-mcp",
+        "supportURL": "https://github.com/headlesshq/headlessmc-mcp/issues",
+        "privacyPolicyURL": "https://github.com/headlesshq/headlessmc-mcp/blob/main/PRIVACY.md",
+        "termsOfServiceURL": "https://github.com/headlesshq/headlessmc-mcp/blob/main/TERMS.md",
+        "defaultPrompt": [
+          "Launch a headless Fabric 1.21.8 client and create a singleplayer world",
+          "Start a Paper server and connect two clients to it",
+          "Test my mod jar on Fabric and NeoForge"
+        ],
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      }
+    }
+  }
+}
