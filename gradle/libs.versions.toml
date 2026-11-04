@@ -7,7 +7,7 @@ hmc-specifics = "3.0.1"
 picocli = "4.7.7"
 jspecify = "1.0.1"
 # keep aligned with headlessmc, which splits command lines with JLine
-jline = "4.4.8"
+jline = "4.5.0"
 
 [libraries]
 quarkus-bom = { module = "io.quarkus.platform:quarkus-bom", version.ref = "quarkus" }
