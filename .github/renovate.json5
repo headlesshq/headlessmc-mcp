@@ -18,8 +18,13 @@
     'gradle-wrapper',
     'github-actions',
     'devcontainer',
+    'nix',
     'custom.regex',
   ],
+  // the nix manager is in beta and disabled by default
+  nix: {
+    enabled: true,
+  },
   customManagers: [
     {
       // the HMC-Specifics release the MCP server downloads and installs into the clients it launches
@@ -48,6 +53,19 @@
       matchManagers: [
         'gradle-wrapper',
       ],
+      semanticCommitType: 'build',
+      semanticCommitScope: 'deps',
+    },
+    {
+      // the flake only provides the dev shell, so its inputs are updated together once a month
+      matchManagers: [
+        'nix',
+      ],
+      groupName: 'nix flake inputs',
+      schedule: [
+        'on the first day of the month',
+      ],
+      automerge: false,
       semanticCommitType: 'build',
       semanticCommitScope: 'deps',
     },
