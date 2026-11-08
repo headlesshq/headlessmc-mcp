@@ -18,7 +18,11 @@
   // Set DEVCONTAINER_USER=root when using rootless Docker.
   "remoteUser": "${localEnv:DEVCONTAINER_USER:vscode}",
   "containerEnv": {
-    "GRADLE_USER_HOME": "/home/vscode/.gradle"
+    "GRADLE_USER_HOME": "/home/vscode/.gradle",
+    "GRAALVM_HOME": "/opt/graalvm-25"
+  },
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:/opt/graalvm-25/bin"
   },
   // HMC-Specifics' API is built from the submodule.
   "initializeCommand": "git submodule update --init --recursive",
