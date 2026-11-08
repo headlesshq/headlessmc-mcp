@@ -17,6 +17,7 @@
     'gradle',
     'gradle-wrapper',
     'github-actions',
+    'devcontainer',
     'custom.regex',
   ],
   customManagers: [
