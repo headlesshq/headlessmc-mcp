@@ -1,6 +1,8 @@
 {
   "name": "headlessmc-mcp",
-  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
       "version": "25",
@@ -26,7 +28,7 @@
   },
   // HMC-Specifics' API is built from the submodule.
   "initializeCommand": "git submodule update --init --recursive",
-  "onCreateCommand": "bash .devcontainer/on-create.sh",
+  "onCreateCommand": "sudo chown \"$(id -u):$(id -g)\" \"$GRADLE_USER_HOME\"",
   "postCreateCommand": "./gradlew --version",
   "customizations": {
     "vscode": {

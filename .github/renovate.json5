@@ -17,6 +17,7 @@
     'gradle',
     'gradle-wrapper',
     'github-actions',
+    'dockerfile',
     'devcontainer',
     'nix',
     'custom.regex',
@@ -66,6 +67,18 @@
         'on the first day of the month',
       ],
       automerge: false,
+      semanticCommitType: 'build',
+      semanticCommitScope: 'deps',
+    },
+    {
+      // the devcontainer only affects development, so its updates must not trigger a release
+      matchManagers: [
+        'dockerfile',
+        'devcontainer',
+      ],
+      matchFileNames: [
+        '.devcontainer/**',
+      ],
       semanticCommitType: 'build',
       semanticCommitScope: 'deps',
     },
