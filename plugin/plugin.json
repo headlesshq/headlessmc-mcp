@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "headlessmc-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server for HeadlessMc: install, launch and control Minecraft: Java Edition clients and servers, also headless, on every version and modloader, with in-game control through HMC-Specifics.",
   "author": {
     "name": "headlesshq",
