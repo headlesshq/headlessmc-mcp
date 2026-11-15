@@ -7,7 +7,8 @@ install, launch and control Minecraft: Java Edition from AI agents.
 
 This package starts the native executable of [headlessmc-mcp](https://github.com/headlesshq/headlessmc-mcp) for your
 platform (Windows x64, Linux x64/arm64, macOS x64/arm64), which npm installs as an optional dependency. No Java
-installation is needed for the MCP server itself.
+installation is needed for the MCP server itself. On Linux x64 with musl libc (e.g. Alpine Linux) this is a fully static
+executable.
 
 ```json
 {

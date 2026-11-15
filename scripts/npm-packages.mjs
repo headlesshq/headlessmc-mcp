@@ -14,16 +14,18 @@ if (!dist || !out) {
 
 const main = JSON.parse(readFileSync('npm/headlessmc-mcp/package.json', 'utf8'));
 
-// npm platform (process.platform-process.arch) -> name of the release asset
+// npm platform (process.platform-process.arch[-libc]) -> name of the release asset and the libc of Linux executables.
+// The musl executable is fully static, bin/headlessmc-mcp.js also uses it where the glibc executable cannot run.
 const platforms = {
-    'linux-x64': 'headlessmc-mcp-linux-x64',
-    'linux-arm64': 'headlessmc-mcp-linux-arm64',
-    'darwin-x64': 'headlessmc-mcp-macos-x64',
-    'darwin-arm64': 'headlessmc-mcp-macos-arm64',
-    'win32-x64': 'headlessmc-mcp-windows-x64.exe',
+    'linux-x64': { asset: 'headlessmc-mcp-linux-x64', libc: 'glibc' },
+    'linux-x64-musl': { asset: 'headlessmc-mcp-linux-x64-musl', libc: 'musl' },
+    'linux-arm64': { asset: 'headlessmc-mcp-linux-arm64', libc: 'glibc' },
+    'darwin-x64': { asset: 'headlessmc-mcp-macos-x64' },
+    'darwin-arm64': { asset: 'headlessmc-mcp-macos-arm64' },
+    'win32-x64': { asset: 'headlessmc-mcp-windows-x64.exe' },
 };
 
-for (const [platform, asset] of Object.entries(platforms)) {
+for (const [platform, { asset, libc }] of Object.entries(platforms)) {
     const [os, cpu] = platform.split('-');
     const name = `@headlesshq/headlessmc-mcp-${platform}`;
     if (main.optionalDependencies[name] !== main.version) {
@@ -44,12 +46,16 @@ for (const [platform, asset] of Object.entries(platforms)) {
     writeFileSync(join(dir, 'package.json'), JSON.stringify({
         name,
         version: main.version,
-        description: `The ${platform} executable of ${main.name}.`,
+        description: libc === 'musl'
+            ? `The statically linked ${os}-${cpu} executable (musl) of ${main.name}.`
+            : `The ${platform} executable of ${main.name}.`,
         homepage: main.homepage,
         repository: main.repository,
         license: main.license,
         os: [os],
         cpu: [cpu],
+        // npm only installs the musl executable on musl systems automatically
+        ...(libc ? { libc: [libc] } : {}),
         files: ['bin'],
     }, null, 2) + '\n');
     writeFileSync(join(dir, 'README.md'), `# ${name}\n\nThe ${platform} executable of [${main.name}](https://www.npmjs.com/package/${main.name}), use that package instead.\n`);

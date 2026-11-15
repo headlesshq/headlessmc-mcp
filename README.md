@@ -127,7 +127,8 @@ Download the latest release from [GitHub Releases](https://github.com/headlesshq
 |---|---|
 | `headlessmc-mcp.jar` | Any platform with Java 25 or newer: `java -jar headlessmc-mcp.jar` |
 | `headlessmc-mcp-windows-x64.exe` | Windows x64 |
-| `headlessmc-mcp-linux-x64`, `headlessmc-mcp-linux-arm64` | Linux (e.g. Ubuntu) x64 and arm64 |
+| `headlessmc-mcp-linux-x64`, `headlessmc-mcp-linux-arm64` | Linux (e.g. Ubuntu) x64 and arm64, needs glibc 2.34 or newer |
+| `headlessmc-mcp-linux-x64-musl` | Linux x64, fully static: musl systems (e.g. Alpine Linux), NixOS and older glibc |
 | `headlessmc-mcp-macos-arm64`, `headlessmc-mcp-macos-x64` | macOS on Apple silicon and Intel |
 
 ## Building
