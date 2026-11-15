@@ -97,6 +97,8 @@ jobs:
       matrix:
         os:
           - { os: ubuntu-latest, name: headlessmc-mcp-linux-x64 }
+          # fully static, for musl systems (e.g. Alpine Linux), like HeadlessMc's headlessmc-launcher-linux-x64-musl
+          - { os: ubuntu-latest, name: headlessmc-mcp-linux-x64-musl, musl: true }
         # native builds on the other platforms take long, so only build them for releases, like HeadlessMc
         include: >-
           ${{ fromJSON(needs.release-please.outputs.release_created == 'true' && '[
@@ -115,6 +117,7 @@ jobs:
           java-version: '25'
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-musl: ${{ matrix.os.musl == true }}
       - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
 
       - name: Build native executable
@@ -127,6 +130,8 @@ jobs:
             ulimit -n 524288
           fi
           bash scripts/build-native.sh
+        env:
+          NATIVE_MUSL: ${{ matrix.os.musl == true }}
 
       - name: Rename executable
         shell: bash
@@ -149,6 +154,21 @@ jobs:
           RESPONSE=$( (echo "$REQUEST"; sleep 10) | "$EXE" "-Dhmc.files.location=$RUNNER_TEMP/hmc" | head -n 1)
           echo "$RESPONSE"
           echo "$RESPONSE" | grep -q '"serverInfo"'
+
+      - name: Smoke test musl executable
+        if: matrix.os.musl == true
+        run: |
+          EXE="dist/${{ matrix.os.name }}"
+          file "$EXE"
+          file "$EXE" | grep -q 'statically linked'
+          REQUEST='{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"ci","version":"0"}}}'
+          for image in alpine:latest nixos/nix:latest ubuntu:20.04; do
+            echo "Running $EXE in $image"
+            RESPONSE=$( (echo "$REQUEST"; sleep 10) | docker run --rm -i -v "$PWD/$EXE:/headlessmc-mcp:ro" "$image" \
+              /headlessmc-mcp -Dhmc.files.location=/tmp/hmc | head -n 1)
+            echo "$RESPONSE"
+            echo "$RESPONSE" | grep -q '"serverInfo"'
+          done
 
       - name: Upload executable
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
