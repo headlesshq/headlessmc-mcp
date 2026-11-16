@@ -5,7 +5,9 @@
     'config:best-practices',
   ],
   timezone: 'UTC',
-  dependencyDashboard: true,
+  dependencyDashboard: {
+    enabled: true,
+  },
   platformCommit: 'enabled',
   prCreation: 'not-pending',
   automergeStrategy: 'squash',
@@ -22,13 +24,11 @@
     'nix',
     'custom.regex',
   ],
-  // the nix manager is in beta and disabled by default
   nix: {
     enabled: true,
   },
   customManagers: [
     {
-      // the HMC-Specifics release the MCP server downloads and installs into the clients it launches
       customType: 'regex',
       managerFilePatterns: [
         '/^src/main/resources/application\\.properties$/',
@@ -42,7 +42,6 @@
   ],
   packageRules: [
     {
-      // dependency updates affect the released artifacts, so they should trigger a release
       matchManagers: [
         'gradle',
         'custom.regex',
@@ -58,7 +57,6 @@
       semanticCommitScope: 'deps',
     },
     {
-      // the flake only provides the dev shell, so its inputs are updated together once a month
       matchManagers: [
         'nix',
       ],
@@ -71,7 +69,6 @@
       semanticCommitScope: 'deps',
     },
     {
-      // the devcontainer only affects development, so its updates must not trigger a release
       matchManagers: [
         'dockerfile',
         'devcontainer',
@@ -90,7 +87,6 @@
       semanticCommitScope: 'deps',
     },
     {
-      // the Quarkus platform, its Gradle plugin and the BOM share a version
       matchPackageNames: [
         'io.quarkus:**',
         'io.quarkus.platform:**',
@@ -99,14 +95,12 @@
       groupName: 'Quarkus',
     },
     {
-      // all HeadlessMc libraries share a version
       matchPackageNames: [
         'io.github.headlesshq:headlessmc**',
       ],
       groupName: 'HeadlessMc',
     },
     {
-      // hmc-specifics-api is built from the hmc-specifics submodule, it is not published
       matchPackageNames: [
         'me.earth.headlessmc:hmc-specifics-api',
       ],
