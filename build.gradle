@@ -13,6 +13,14 @@ repositories {
 configurations.configureEach {
     // The jline progressbar draws to the terminal, but stdout is the MCP channel.
     exclude group: 'io.github.headlesshq', module: 'headlessmc-progressbar-jline'
+    // The Quarkus BOM enforces an older org.jline:jline than the JLine modules HeadlessMc brings in. Both contain
+    // the same classes, and HeadlessMc calls methods that only exist in the JLine it was built with.
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.jline') {
+            details.useVersion(libs.versions.jline.get())
+            details.because('HeadlessMc is built with this JLine')
+        }
+    }
 }
 
 configurations {
