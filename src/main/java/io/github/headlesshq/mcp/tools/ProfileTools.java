@@ -48,7 +48,7 @@ public class ProfileTools {
 
         return profiles.stream()
             .sorted(Comparator.comparing(Profile::name))
-            .map(profile -> profile.name() + " [" + profile.version().toString(" ") + "] " + profile.path()
+            .map(profile -> profile.name() + " [" + profileSupport.describe(profile) + "] " + profile.path()
                 + profileSupport.usedBy(profile.path()).map(instance -> " (running as instance " + instance.getId() + ")").orElse(""))
             .collect(Collectors.joining("\n"));
     }
