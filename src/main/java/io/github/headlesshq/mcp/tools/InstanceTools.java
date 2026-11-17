@@ -10,6 +10,7 @@ import io.github.headlesshq.mcp.instance.LaunchRequest;
 import io.github.headlesshq.mcp.instance.ModInstaller;
 import io.github.headlesshq.headlessmc.launcher.profile.Profile;
 import io.github.headlesshq.headlessmc.launcher.server.ServerService;
+import io.github.headlesshq.headlessmc.version.arg.VersionArg;
 import io.github.headlesshq.mcp.hmc.Interaction;
 import io.github.headlesshq.mcp.instance.ProfileSupport;
 import io.quarkiverse.mcp.server.Elicitation;
@@ -140,8 +141,13 @@ public class InstanceTools {
                                                 + ", pass another profile name to launch a second client.");
             }
 
-            modloader = ProfileSupport.loaderOf(existing.get());
-            mcVersion = existing.get().version().version();
+            Optional<VersionArg> profileVersion = profileSupport.versionOf(existing.get());
+            if (profileVersion.isEmpty()) {
+                return ToolResponse.ofError("The Minecraft version of profile " + profileName + " is not known, launch it with the hmc tool.");
+            }
+
+            modloader = profileSupport.loaderOf(existing.get());
+            mcVersion = profileVersion.get().version();
         }
 
         boolean controllable = ModInstaller.supports(modloader);

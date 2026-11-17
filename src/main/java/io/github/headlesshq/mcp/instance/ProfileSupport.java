@@ -1,9 +1,9 @@
 package io.github.headlesshq.mcp.instance;
 
 import io.github.headlesshq.headlessmc.files.AppFiles;
+import io.github.headlesshq.headlessmc.launcher.profile.LaunchTargetService;
 import io.github.headlesshq.headlessmc.launcher.profile.Profile;
 import io.github.headlesshq.headlessmc.launcher.profile.ProfileService;
-import io.github.headlesshq.headlessmc.version.arg.Side;
 import io.github.headlesshq.headlessmc.version.arg.VersionArg;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -27,12 +27,19 @@ public class ProfileSupport {
     public static final Pattern NAME = Pattern.compile("[A-Za-z0-9][A-Za-z0-9._-]{0,63}");
 
     private final ProfileService profileService;
+    private final LaunchTargetService launchTargetService;
     private final InstanceManager instanceManager;
     private final AppFiles appFiles;
 
     @Inject
-    public ProfileSupport(ProfileService profileService, InstanceManager instanceManager, AppFiles appFiles) {
+    public ProfileSupport(
+        ProfileService profileService,
+        LaunchTargetService launchTargetService,
+        InstanceManager instanceManager,
+        AppFiles appFiles
+    ) {
         this.profileService = profileService;
+        this.launchTargetService = launchTargetService;
         this.instanceManager = instanceManager;
         this.appFiles = appFiles;
     }
@@ -41,14 +48,14 @@ public class ProfileSupport {
      * @return the client profile with the name, HeadlessMc stores servers as profiles as well.
      */
     public Optional<Profile> get(String name) {
-        return profileService.getProfile(name).filter(profile -> profile.side() == Side.CLIENT);
+        return profileService.getProfile(name).filter(Profile::isClient);
     }
 
     /**
      * @return all client profiles.
      */
     public List<Profile> list() {
-        return profileService.getProfiles().stream().filter(profile -> profile.side() == Side.CLIENT).toList();
+        return profileService.getProfiles().stream().filter(Profile::isClient).toList();
     }
 
     public void remove(Profile profile) {
@@ -101,13 +108,28 @@ public class ProfileSupport {
     }
 
     /**
-     * @return the modloader of a profile, {@code null} for vanilla.
+     * @return the version a profile launches, empty if its launch target does not know it, e.g. for a script.
      */
-    public static @Nullable String loaderOf(Profile profile) {
-        String platform = profile.version().platform();
-        return platform == null || VersionArg.PLATFORM_VANILLA.equalsIgnoreCase(platform)
-            ? null
-            : platform.toLowerCase(Locale.ROOT);
+    public Optional<VersionArg> versionOf(Profile profile) {
+        return launchTargetService.describe(profile).version();
+    }
+
+    /**
+     * @return what a profile launches, e.g. {@code fabric 1.21.5}, or the label of its launch target.
+     */
+    public String describe(Profile profile) {
+        return versionOf(profile).map(version -> version.toString(" ")).orElseGet(() -> launchTargetService.getLabel(profile));
+    }
+
+    /**
+     * @return the modloader of a profile, {@code null} for vanilla or if its version is not known.
+     */
+    public @Nullable String loaderOf(Profile profile) {
+        return versionOf(profile)
+            .map(VersionArg::platform)
+            .filter(platform -> !VersionArg.PLATFORM_VANILLA.equalsIgnoreCase(platform))
+            .map(platform -> platform.toLowerCase(Locale.ROOT))
+            .orElse(null);
     }
 
 }

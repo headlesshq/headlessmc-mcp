@@ -2,13 +2,16 @@ package io.github.headlesshq.mcp.instance;
 
 import io.github.headlesshq.headlessmc.config.Holder;
 import io.github.headlesshq.headlessmc.console.Console;
+import io.github.headlesshq.headlessmc.java.launcher.JavaProcessManager;
 import io.github.headlesshq.headlessmc.launcher.LauncherConfig;
 import io.github.headlesshq.headlessmc.launcher.LifecycleService;
 import io.github.headlesshq.headlessmc.launcher.ProcessLifecycle;
 import io.github.headlesshq.headlessmc.launcher.process.ProcessLauncher;
+import io.github.headlesshq.headlessmc.launcher.profile.ProfileLaunchEvent;
 import io.github.headlesshq.headlessmc.test.CommandTestService;
 import io.github.headlesshq.headlessmc.test.TestConfig;
 import jakarta.annotation.Priority;
+import jakarta.enterprise.event.Event;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -32,6 +35,7 @@ public class McpLifecycleService extends LifecycleService {
     private final Holder<LauncherConfig> config;
     private final Holder<TestConfig> testConfig;
     private final Console console;
+    private final JavaProcessManager processManager;
 
     @Inject
     public McpLifecycleService(
@@ -39,22 +43,25 @@ public class McpLifecycleService extends LifecycleService {
         Holder<LauncherConfig> config,
         Holder<TestConfig> testConfig,
         Console console,
+        JavaProcessManager processManager,
+        Event<ProfileLaunchEvent> launchEvent,
         InstanceManager instanceManager,
         ModInstaller modInstaller
     ) {
-        super(testService, config, testConfig, console);
+        super(testService, config, testConfig, console, processManager, launchEvent);
         this.instanceManager = instanceManager;
         this.modInstaller = modInstaller;
         this.testService = testService;
         this.config = config;
         this.testConfig = testConfig;
         this.console = console;
+        this.processManager = processManager;
     }
 
     @Override
     public ProcessLifecycle wrap(ProcessLauncher launcher, int retries) {
         ProcessLifecycle lifecycle = new ProcessLifecycle(
-            launcher, testService, config.get(), testConfig.get(), console, launcher.getGameDir()
+            launcher, testService, config.get(), testConfig.get(), console, launcher.getGameDir(), processManager
         ) {
             @Override
             public Integer call() {
