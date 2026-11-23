@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.2.0](https://github.com/headlesshq/headlessmc-mcp/compare/0.1.0...0.2.0) (2026-11-23)
+
+
+### Features
+
+* add the static linux-x64 musl executable ([#23](https://github.com/headlesshq/headlessmc-mcp/issues/23)) ([6a199fd](https://github.com/headlesshq/headlessmc-mcp/commit/6a199fd7567759cad89f80d69e5e40ad54292eaa))
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.jline:jline to v4.5.0 ([#10](https://github.com/headlesshq/headlessmc-mcp/issues/10)) ([76509ee](https://github.com/headlesshq/headlessmc-mcp/commit/76509ee3d721402410b1a88deb4adf997cf0634b))
+* **deps:** update dependency org.jline:jline to v4.6.0 ([#17](https://github.com/headlesshq/headlessmc-mcp/issues/17)) ([66f6f96](https://github.com/headlesshq/headlessmc-mcp/commit/66f6f963798951ab0a1188985ecdb1998eb0e2f7))
+* **deps:** update dependency org.jline:jline to v4.7.0 ([#20](https://github.com/headlesshq/headlessmc-mcp/issues/20)) ([6b2970b](https://github.com/headlesshq/headlessmc-mcp/commit/6b2970b268a8af37f007cb72efc15ec6e65c805f))
+* **deps:** update headlessmc to 3.0.0-RC9 ([#24](https://github.com/headlesshq/headlessmc-mcp/issues/24)) ([1f0fce2](https://github.com/headlesshq/headlessmc-mcp/commit/1f0fce2f2db4b3814bd1b88d2221143c40196dd9))
+* **deps:** update hmc-specifics-api ([7bafcf7](https://github.com/headlesshq/headlessmc-mcp/commit/7bafcf77b397a9d0a89e218b3f9470a4af7759b1))
+* **deps:** update quarkus to v3.40.1.1 ([#4](https://github.com/headlesshq/headlessmc-mcp/issues/4)) ([cde69fc](https://github.com/headlesshq/headlessmc-mcp/commit/cde69fcb79363c79d51d02ab9d039d62ed4f2074))
+* **deps:** update quarkus to v3.40.1.2 ([#16](https://github.com/headlesshq/headlessmc-mcp/issues/16)) ([0e16eaf](https://github.com/headlesshq/headlessmc-mcp/commit/0e16eaffadecb22d896c206bd99466a986589a64))
+* **deps:** update quarkus.mcp.server to v2.0.4 ([#8](https://github.com/headlesshq/headlessmc-mcp/issues/8)) ([12c30a7](https://github.com/headlesshq/headlessmc-mcp/commit/12c30a7b4ad269665eb673d216060d7b3536c14d))
+
 ## 0.1.0 (2026-10-19)
 
 

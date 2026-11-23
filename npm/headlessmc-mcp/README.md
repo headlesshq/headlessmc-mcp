@@ -15,7 +15,7 @@ executable.
   "mcpServers": {
     "headlessmc": {
       "command": "npx",
-      "args": ["-y", "@headlesshq/headlessmc-mcp@0.1.0"]
+      "args": ["-y", "@headlesshq/headlessmc-mcp@0.2.0"]
     }
   }
 }
