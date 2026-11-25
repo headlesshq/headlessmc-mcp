@@ -1,7 +1,7 @@
 [versions]
 # Keep quarkus aligned with headlessmc/gradle/libs.versions.toml, HeadlessMc's modules are built with it.
 quarkus = "3.40.1.2"
-quarkus-mcp-server = "2.0.4"
+quarkus-mcp-server = "2.1.0"
 headlessmc = "3.0.0-RC9"
 hmc-specifics = "3.0.1"
 picocli = "4.7.7"
